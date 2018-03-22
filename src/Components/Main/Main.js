@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import "./Main.css";
-import Navbar from "./Components/Navbar";
+import Wrapper from "../Wrapper";
+import Navbar from "../Navbar";
+import Header from "../Header";
+import Footer from "../Footer";
 import images from "../../images.json";
-
-
 
 
 let guessedArray = [];
@@ -14,30 +15,30 @@ class Main extends Component {
 state = {
     images: images,
     score: 0,
-    guessResult: "",
+    topScore: 0,
+    guessResult: "Click an Image to Begin",
     guesses: []
   }
 
 randomizeImages = images => {
-	var currentIndex = images.length, temporaryValue, randomIndex;
 
-	  // While there remain elements to shuffle...
-	  while (0 !== currentIndex) {
+	  //clone the options and shuffle them up
+    var fullOptions = [...images]
+    var n = fullOptions.length;
+    var tempArr = [];
+    for ( var i = 0; i < n-1; i++ ) {
+      // The following line removes one random element from arr
+      // and pushes it onto tempArr
+      tempArr.push(fullOptions.splice(Math.floor(Math.random()*fullOptions.length),1)[0]);
+    }
+    // Push the remaining item onto tempArr
+    tempArr.push(fullOptions[0]);
+    //set fullOptions to equal the new shuffled tempArr
+    fullOptions=tempArr; 
 
-	    // Pick a remaining element...
-	    randomIndex = Math.floor(Math.random() * currentIndex);
-	    currentIndex -= 1;
+    return fullOptions;
 
-	    // And swap it with the current element.
-	    temporaryValue = images[currentIndex];
-	    images[currentIndex] = images[randomIndex];
-	    images[randomIndex] = temporaryValue;
-	  }
-
-	  return images;
 }
-
-//guessedArray = ["ds"]
 
 handleImageClick = event => {
 	//event.preventDefault();
@@ -45,16 +46,22 @@ handleImageClick = event => {
 
 	if(guessedArray.includes(event.target.id)){
 
-		alert("wrong guess")
+		if(this.state.score > this.state.topScore){
+			this.setState({
+				topScore: this.state.score
+			})
+		}
 		guessedArray = [];
 		this.setState({
-			score: 1
+			guessResult: "Incorrect!  Try Again.",
+			score: 0
 		})
 
 	}else{
 		guessedArray.push(event.target.id)
 		this.setState({
-			score: this.state.score + 1
+			score: this.state.score + 1,
+			guessResult: "Correct!  You are on a role!"
 		})
 		console.log(this.state.score)
 	}
@@ -68,36 +75,35 @@ handleImageClick = event => {
 }
 
 renderImages = () => {
-	const allImages = images;
 	
-		{allImages.map(image => (
-			
-		    	<div id = {image.id} role="img" aria-label="click item" onClick={this.handleImageClick} className="click-item" key={image.id} style={{backgroundImage: "url(" + image.image + ")"}}></div>
+	{this.state.images.map(image => (
+				
+		<div id = {image.id} role="img" aria-label="click item" onClick={this.handleImageClick} className="shake click-item" key={image.id} style={{backgroundImage: "url(" + image.image + ")"}}></div>
 
-		))}
+	))}
 
 }
-
-
 
 render() {
 	
 	return(
-		<wrapper>
-			<Navbar>
-				{this}.state.score
-			</Navbar>
-			<main className = "container">
-				
-				{this.state.images.map(image => (
-				
-			    	<div id = {image.id} role="img" aria-label="click item" onClick={this.handleImageClick} className="shake click-item" key={image.id} style={{backgroundImage: "url(" + image.image + ")"}}></div>
+	
+	<Wrapper>
+        <Navbar score={this.state.score} topScore={this.state.topScore} guessResult={this.state.guessResult}/>
+        <Header/>
+        <main className = "container">
+		
 
-				))}
-			
+		{this.renderImages()}
+		{this.state.images.map(image => (
 				
-			</main>
-		</wrapper>
+			<div id = {image.id} role="img" aria-label="click item" onClick={this.handleImageClick} className="shake click-item" key={image.id} style={{backgroundImage: "url(" + image.image + ")"}}></div>
+
+		))}
+		</main>
+          
+        <Footer/>
+      </Wrapper>
 	)
 }
 
