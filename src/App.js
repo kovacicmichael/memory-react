@@ -5,7 +5,7 @@ import Navbar from "./Components/Navbar";
 import Header from "./Components/Header"
 import Main from "./Components/Main";
 import Footer from "./Components/Footer"
-import images from "./images.json";
+
 import './App.css';
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
     <Wrapper>
         <Navbar />
         <Header/>
-        <Main images={images} />
+        <Main />
           
         <Footer/>
       </Wrapper>

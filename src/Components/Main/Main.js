@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
 import "./Main.css";
+import Navbar from "./Components/Navbar";
 import images from "../../images.json";
+
+
+
+
+let guessedArray = [];
+
 
 class Main extends Component {
 
 state = {
-    images: images
+    images: images,
+    score: 0,
+    guessResult: "",
+    guesses: []
   }
 
 randomizeImages = images => {
@@ -27,15 +37,33 @@ randomizeImages = images => {
 	  return images;
 }
 
+//guessedArray = ["ds"]
+
 handleImageClick = event => {
+	//event.preventDefault();
+	console.log(guessedArray)
 
+	if(guessedArray.includes(event.target.id)){
 
-	console.log("here")
-	console.log(event.target.id)
-	console.log(this.state)
+		alert("wrong guess")
+		guessedArray = [];
+		this.setState({
+			score: 1
+		})
+
+	}else{
+		guessedArray.push(event.target.id)
+		this.setState({
+			score: this.state.score + 1
+		})
+		console.log(this.state.score)
+	}
+
+	
 	this.setState({
 		images: this.randomizeImages(images)
 	})
+	
 
 }
 
@@ -55,16 +83,21 @@ renderImages = () => {
 render() {
 	
 	return(
-		<main className = "container">
-			
-			{this.state.images.map(image => (
-			
-		    	<div id = {image.id} role="img" aria-label="click item" onClick={this.handleImageClick} className="shake click-item" key={image.id} style={{backgroundImage: "url(" + image.image + ")"}}></div>
+		<wrapper>
+			<Navbar>
+				{this}.state.score
+			</Navbar>
+			<main className = "container">
+				
+				{this.state.images.map(image => (
+				
+			    	<div id = {image.id} role="img" aria-label="click item" onClick={this.handleImageClick} className="shake click-item" key={image.id} style={{backgroundImage: "url(" + image.image + ")"}}></div>
 
-			))}
-		
+				))}
 			
-		</main>
+				
+			</main>
+		</wrapper>
 	)
 }
 
