@@ -2,7 +2,7 @@
   "name": "memory-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kovacicmichael.github.io/memory-react/",
+  "homepage": "https://kovacicmichael.github.io/memory-react/client",
   "dependencies": {
     "gh-pages": "^1.1.0",
     "react": "^16.2.0",

@@ -18,7 +18,7 @@ npm manifest:
     "name": "memory-react",
     "version": "0.1.0",
     "private": true,
-    "homepage": "https://kovacicmichael.github.io/memory-react/",
+    "homepage": "https://kovacicmichael.github.io/memory-react/client",
     "dependencies": {
       "gh-pages": "^1.1.0",
       "react": "^16.2.0",
@@ -7298,7 +7298,7 @@ Trace:
   Exit code: 1
   Command: sh
   Arguments: -c react-scripts start
-  Directory: /Users/michaelkovacic/Desktop/Projects/Homework/memory-react
+  Directory: /Users/michaelkovacic/Desktop/Projects/Homework/memory-react/client
   Output:
   
       at ProcessTermError.MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
