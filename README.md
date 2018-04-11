@@ -20,6 +20,8 @@ Michael Kovacic
 
 ## Technologies Used
 * Javascript
+* HMTL
+* CSS
 * Bootstrap
 * React
 * Git Hub Pages
